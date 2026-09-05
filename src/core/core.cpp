@@ -20,10 +20,15 @@ int getOperatorPrecedence(Operator op) {
     throw std::invalid_argument("unhandled Operator in getOperatorPrecedence");
   }
 }
-bool isAPotentialOperator(const char &c) {
-  return c == '&' || c == '|' || c == '!' || c == '-' || c == '<';
+bool isTokenBoundary(const char &c) {
+  return c == '&' || c == '|' || c == '!' || c == '-' || c == '<' || c == '(' ||
+         c == ')';
 }
-bool notAValidChar(const char &c) {}
+bool notAValidChar(const char &c) {
+  return !((c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z') ||
+           (c >= '0' && c <= '9') || c == '_');
+}
+bool isANumber(const char &c) { return c >= '0' && c <= '9'; }
 
 string stripWhitespaces(const string &str) {
   string strippedString{""};
@@ -37,9 +42,6 @@ string stripWhitespaces(const string &str) {
   return strippedString;
 }
 std::vector<Token> lexer(string proposition) {
-  string andIdentifier = "&";
-  string orIdentifier = "|";
-  string notIdentifier = "!";
 
   string strippedProposition = stripWhitespaces(proposition);
 
@@ -102,9 +104,13 @@ std::vector<Token> lexer(string proposition) {
         subStr.reserve(length);
         if (i < strippedProposition.length()) {
           size_t j = 0;
+          if (isANumber(strippedProposition[j])) {
+            throw std::invalid_argument(
+                "Variable name cannot begin with a number");
+          }
           while (j < strippedProposition.length() &&
-                 !isAPotentialOperator(strippedProposition[j])) {
-            if (notAValidChar(strippedProposition[i])) {
+                 !isTokenBoundary(strippedProposition[j])) {
+            if (notAValidChar(strippedProposition[j])) {
               throw std::invalid_argument("Invalid character");
             }
             if (j < strippedProposition.length()) {
