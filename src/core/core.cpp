@@ -1,5 +1,6 @@
 #include "./core.hpp"
 #include "stdexcept"
+#include <stdexcept>
 #include <string>
 #include <vector>
 
@@ -19,6 +20,10 @@ int getOperatorPrecedence(Operator op) {
     throw std::invalid_argument("unhandled Operator in getOperatorPrecedence");
   }
 }
+bool isAPotentialOperator(const char &c) {
+  return c == '&' || c == '|' || c == '!' || c == '-' || c == '<';
+}
+bool notAValidChar(const char &c) {}
 
 string stripWhitespaces(const string &str) {
   string strippedString{""};
@@ -41,41 +46,79 @@ std::vector<Token> lexer(string proposition) {
   std::vector<Token> lexedProposition{};
   size_t length = strippedProposition.length();
   while (!strippedProposition.empty()) {
-    string subStr{""};
-    size_t countOfIndexTraversed{0};
-    subStr.reserve(length);
-    bool operatorFound{false};
-    for (size_t i = 0; !operatorFound; i++) {
+    bool operatorFoundorEOL{false};
+    for (size_t i = 0; !operatorFoundorEOL && i < strippedProposition.length();
+         i++) {
       if (strippedProposition[i] == '&') {
         lexedProposition.push_back(Token{Type::OPERATOR, Operator::AND});
-        operatorFound = true;
-        countOfIndexTraversed++;
+        operatorFoundorEOL = true;
+        strippedProposition = strippedProposition.substr(1);
       } else if (strippedProposition[i] == '|') {
         lexedProposition.push_back(Token{Type::OPERATOR, Operator::OR});
-        operatorFound = true;
-        countOfIndexTraversed++;
+        operatorFoundorEOL = true;
+        strippedProposition = strippedProposition.substr(1);
+      } else if (strippedProposition[i] == '(') {
+        lexedProposition.push_back(Token{Type::LPAREN});
+        operatorFoundorEOL = true;
+        strippedProposition = strippedProposition.substr(1);
+      } else if (strippedProposition[i] == ')') {
+        lexedProposition.push_back(Token{Type::RPAREN});
+        operatorFoundorEOL = true;
+        strippedProposition = strippedProposition.substr(1);
       } else if (strippedProposition[i] == '!') {
         lexedProposition.push_back(Token{Type::OPERATOR, Operator::NOT});
-        operatorFound = true;
-        countOfIndexTraversed++;
-      } else if (strippedProposition[i] == '-' &&
-                 strippedProposition[i + 1] == '>') {
+        operatorFoundorEOL = true;
+        strippedProposition = strippedProposition.substr(1);
+      } else if (strippedProposition[i] == '-') {
+        if ((i + 1) >= strippedProposition.length()) {
+          throw std::invalid_argument("invalid character at position " +
+                                      to_string(i));
+        }
+        if (strippedProposition[i + 1] != '>') {
+          throw std::invalid_argument("invalid character at position " +
+                                      to_string(i));
+        }
+
         lexedProposition.push_back(
             Token{Type::OPERATOR, Operator::IMPLICATION});
-        operatorFound = true;
-        countOfIndexTraversed = 2;
-      } else if (strippedProposition[i] == '<' &&
-                 strippedProposition[i + 1] == '-' &&
-                 strippedProposition[i + 2] == '>') {
+        operatorFoundorEOL = true;
+        strippedProposition = strippedProposition.substr(2);
+      } else if (strippedProposition[i] == '<') {
+        if ((i + 2) >= strippedProposition.length()) {
+          throw std::invalid_argument("invalid character at position " +
+                                      to_string(i));
+        }
+        if (!(strippedProposition[i + 1] == '-' &&
+              strippedProposition[i + 2] == '>')) {
+          throw std::invalid_argument("invalid character at position " +
+                                      to_string(i));
+        }
         lexedProposition.push_back(
             Token{Type::OPERATOR, Operator::BICONDITIONAL});
-        operatorFound = true;
-        countOfIndexTraversed = 3;
+        operatorFoundorEOL = true;
+        strippedProposition = strippedProposition.substr(3);
       } else {
+        string subStr{""};
+        subStr.reserve(length);
+        if (i < strippedProposition.length()) {
+          size_t j = 0;
+          while (j < strippedProposition.length() &&
+                 !isAPotentialOperator(strippedProposition[j])) {
+            if (notAValidChar(strippedProposition[i])) {
+              throw std::invalid_argument("Invalid character");
+            }
+            if (j < strippedProposition.length()) {
+              subStr.append(1, strippedProposition[j]);
+            }
+            j++;
+          }
+          strippedProposition = strippedProposition.substr(subStr.length());
+          operatorFoundorEOL = true;
+          lexedProposition.push_back(Token{Type::VARIABLE, subStr});
+        }
       }
-      strippedProposition =
-          strippedProposition.substr(0, countOfIndexTraversed);
     }
   }
+  lexedProposition.push_back(Token{Type::END});
   return lexedProposition;
 }
