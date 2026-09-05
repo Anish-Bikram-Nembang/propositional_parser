@@ -7,8 +7,9 @@
     - Biconditional (<->)
 
 #### Notes:
-    in this program the operator precedence of the operators are as follows:
-    () > ! > & > | > -> > <->
+    - only underscores and numbers are allowed in variable names whitespaces are ignored.
+    - in this program the operator precedence of the operators are as follows:
+        () > ! > & > | > -> > <->
 
 ### Steps to run the program
     make sure you have gcc installed
