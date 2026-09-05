@@ -5,17 +5,6 @@
 
 using namespace std;
 
-struct Node {
-  Type type;
-  string identifier;
-  Node *leftChild;
-  Node *rightChild;
-};
-struct AST {
-  Node root;
-  int noOfVertices;
-};
-
 void parser(string proposition) {
   int noOfOpenParenthesis{0};
   int noOfCloseParenthesis{0};
@@ -33,6 +22,6 @@ int main(void) {
   cout << "Enter a proposition:" << '\n';
   getline(cin, proposition);
   cout << "The proposition you entered is: \n" << proposition << '\n';
-  vector<Token> lexedProposition = lexer(proposition);
+  vector<Token> lexedProposition = lex(proposition);
   return 0;
 }

@@ -15,7 +15,7 @@ void flushCurrentIdentifier(std::vector<Token> &tokenBuffer,
     currentIdentifier.clear();
   }
 }
-std::vector<Token> lexer(const string &proposition) {
+std::vector<Token> lex(const string &proposition) {
   std::vector<Token> lexedProposition{};
   string subStr{""};
   size_t cursor = 0;
