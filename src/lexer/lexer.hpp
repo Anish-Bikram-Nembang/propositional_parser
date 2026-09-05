@@ -1,12 +1,11 @@
 #pragma once
-#include "string"
-#include "variant"
-#include "vector"
+#include <string>
+#include <variant>
+#include <vector>
 
 using namespace std;
 enum class Operator { AND, OR, IMPLICATION, BICONDITIONAL, NOT };
 enum class Type { OPERATOR, VARIABLE, LPAREN, RPAREN, END };
-
 using ShapeData = variant<monostate, Operator, string>;
 
 int getOperatorPrecedence(Operator op);

@@ -1,6 +1,7 @@
-#include "./core/core.hpp"
-#include "iostream"
-#include "string"
+#include "./lexer/lexer.hpp"
+#include <iostream>
+#include <string>
+#include <vector>
 
 using namespace std;
 
@@ -32,7 +33,6 @@ int main(void) {
   cout << "Enter a proposition:" << '\n';
   getline(cin, proposition);
   cout << "The proposition you entered is: \n" << proposition << '\n';
-  parser(proposition);
-
+  vector<Token> lexedProposition = lexer(proposition);
   return 0;
 }
