@@ -7,7 +7,7 @@
     - Biconditional (<->)
 
 #### Notes:
-    - only underscores and numbers are allowed in variable names whitespaces are ignored.
+    - only underscores and numbers are allowed in variable names whitespaces are ignored and variables starting with a number is not allowed.
     - in this program the operator precedence of the operators are as follows:
         () > ! > & > | > -> > <->
 
@@ -24,6 +24,6 @@
     ```
     3. compile and run the program
     ```bash
-        g++ main.cpp && ./a.out
+        g++ ./src/main.cpp ./src/lexer/lexer.cpp ./src/parser/parser.cpp && ./a.out
     ```
 
