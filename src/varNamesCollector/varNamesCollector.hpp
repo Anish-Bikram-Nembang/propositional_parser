@@ -1,4 +1,4 @@
+#pragma once
 #include "../lexer/lexer.hpp"
-#include <unordered_set>
 
-std::unordered_set<std::string> collectVarNames(std::vector<Token> tokens);
+std::vector<std::string> collectVarNames(std::vector<Token> tokens);
