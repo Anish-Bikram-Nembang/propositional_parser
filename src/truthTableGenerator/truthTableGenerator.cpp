@@ -16,10 +16,10 @@ void generateTruthTable(const std::vector<Token> &postfix,
       if (i == 0 && assignment == 0) {
         for (size_t k = 0; k < variables.size(); k++) {
           std::cout << " " << variables[k] << " |";
-          truthTableWidth += (variables[k].size() + 2);
+          truthTableWidth += (variables[k].size() + 3);
         }
         std::cout << " " << proposition << "\n";
-        truthTableWidth += (proposition.size() + 2);
+        truthTableWidth += (proposition.size() + 1);
         std::cout << std::setfill('-') << std::setw(truthTableWidth) << ""
                   << '\n';
         std::cout << std::setfill(' ');

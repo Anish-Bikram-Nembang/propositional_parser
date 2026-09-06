@@ -14,16 +14,19 @@
 ### Steps to run the program
     make sure you have gcc installed
 
-    1. Clone the repo:
-    ```bash
-        git clone https://github.com/Anish-Bikram-Nembang/propositional_parser.git
-    ```
-    2. cd into it:
+1. Clone the repo:
+
+```bash
+    git clone https://github.com/Anish-Bikram-Nembang/propositional_parser.git
+```
+
+2. cd into it:
     ```bash
         cd propositional_parser
     ```
-    3. compile and run the program
+3. compile and run the program
     ```bash
-        g++ ./src/main.cpp ./src/lexer/lexer.cpp ./src/parser/parser.cpp && ./a.out
+g++ src/main.cpp src/lexer/lexer.cpp src/evaluator/evaluator.cpp src/postfixProducer/postfix.cpp src/truthTableGenerator/truthTableGenerator.cpp src/varNamesCollector/varNamesCollector.cpp -o parser && ./parser
+
     ```
 
