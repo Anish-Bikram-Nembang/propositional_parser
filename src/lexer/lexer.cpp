@@ -84,6 +84,5 @@ std::vector<Token> lex(const string &proposition) {
     }
   }
   flushCurrentIdentifier(lexedProposition, subStr);
-  lexedProposition.push_back(Token{Type::END});
   return lexedProposition;
 }

@@ -5,7 +5,7 @@
 
 using namespace std;
 enum class Operator { AND, OR, IMPLICATION, BICONDITIONAL, NOT };
-enum class Type { OPERATOR, VARIABLE, LPAREN, RPAREN, END };
+enum class Type { OPERATOR, VARIABLE, LPAREN, RPAREN, UNKNOWN };
 using ShapeData = variant<monostate, Operator, string>;
 
 struct Token {
