@@ -21,12 +21,11 @@
 ```
 
 2. cd into it:
-    ```bash
-        cd propositional_parser
-    ```
+```bash
+    cd propositional_parser
+```
 3. compile and run the program
-    ```bash
+```bash
 g++ src/main.cpp src/lexer/lexer.cpp src/evaluator/evaluator.cpp src/postfixProducer/postfix.cpp src/truthTableGenerator/truthTableGenerator.cpp src/varNamesCollector/varNamesCollector.cpp -o parser && ./parser
-
-    ```
+```
 
