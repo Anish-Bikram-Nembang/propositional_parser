@@ -1,9 +1,9 @@
 #include "./lexer/lexer.hpp"
 #include "./postfixProducer/postfix.hpp"
-#include "./varNamesCollector/varNamesCollector.hpp"
+#include "truthTableGenerator/truthTableGenerator.hpp"
+#include "varNamesCollector/varNamesCollector.hpp"
 #include <iostream>
 #include <string>
-#include <unordered_set>
 #include <vector>
 
 using namespace std;
@@ -16,7 +16,8 @@ int main(void) {
 
   vector<Token> lexedProposition = lex(proposition);
   vector<Token> postfixProposition = producePostfix(lexedProposition);
-  unordered_set<string> variables = collectVarNames(lexedProposition);
+  generateTruthTable(postfixProposition, collectVarNames(postfixProposition),
+                     proposition);
 
   return 0;
 }

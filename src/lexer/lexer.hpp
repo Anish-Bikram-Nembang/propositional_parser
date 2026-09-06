@@ -12,4 +12,4 @@ struct Token {
   ShapeData data;
   Token(Type t, ShapeData d = std::monostate{}) : type{t}, data{d} {}
 };
-std::vector<Token> lex(std::string proposition);
+std::vector<Token> lex(const std::string &proposition);
