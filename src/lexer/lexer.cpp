@@ -9,15 +9,15 @@ bool isValidChar(const char &c) {
 }
 bool isANumber(const char &c) { return c >= '0' && c <= '9'; }
 void flushCurrentIdentifier(std::vector<Token> &tokenBuffer,
-                            string &currentIdentifier) {
+                            std::string &currentIdentifier) {
   if (currentIdentifier.length() != 0) {
     tokenBuffer.push_back(Token{Type::VARIABLE, currentIdentifier});
     currentIdentifier.clear();
   }
 }
-std::vector<Token> lex(const string &proposition) {
+std::vector<Token> lex(const std::string &proposition) {
   std::vector<Token> lexedProposition{};
-  string subStr{""};
+  std::string subStr{""};
   size_t cursor = 0;
 
   while (cursor < proposition.length()) {
@@ -50,11 +50,11 @@ std::vector<Token> lex(const string &proposition) {
       flushCurrentIdentifier(lexedProposition, subStr);
       if ((cursor + 1) >= proposition.length()) {
         throw std::invalid_argument("invalid character at position " +
-                                    to_string(cursor));
+                                    std::to_string(cursor));
       }
       if (proposition[cursor + 1] != '>') {
         throw std::invalid_argument("invalid character at position " +
-                                    to_string(cursor));
+                                    std::to_string(cursor));
       }
 
       lexedProposition.push_back(Token{Type::OPERATOR, Operator::IMPLICATION});
@@ -63,11 +63,11 @@ std::vector<Token> lex(const string &proposition) {
       flushCurrentIdentifier(lexedProposition, subStr);
       if ((cursor + 2) >= proposition.length()) {
         throw std::invalid_argument("invalid character at position " +
-                                    to_string(cursor));
+                                    std::to_string(cursor));
       }
       if (!(proposition[cursor + 1] == '-' && proposition[cursor + 2] == '>')) {
         throw std::invalid_argument("invalid character at position " +
-                                    to_string(cursor));
+                                    std::to_string(cursor));
       }
       lexedProposition.push_back(
           Token{Type::OPERATOR, Operator::BICONDITIONAL});

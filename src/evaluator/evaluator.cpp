@@ -12,15 +12,15 @@ bool BICONDITIONAL(bool a, bool b) {
 }
 bool IMPLICATION(bool a, bool b) { return !(a == true && b == false); }
 
-bool eval(const vector<Token> &postfix,
-          const std::unordered_map<string, bool> &variableValues) {
+bool eval(const std::vector<Token> &postfix,
+          const std::unordered_map<std::string, bool> &variableValues) {
   std::stack<bool> result;
   for (size_t i = 0; i < postfix.size(); i++) {
     if (postfix[i].type == Type::VARIABLE) {
       if (const auto *var = std::get_if<std::string>(&postfix[i].data))
         result.push(variableValues.at(*var));
       else
-        throw std::invalid_argument("invalid variable in " + to_string(i) +
+        throw std::invalid_argument("invalid variable in " + std::to_string(i) +
                                     "th element of postfix");
     } else if (postfix[i].type == Type::OPERATOR) {
       if (const auto *op = std::get_if<Operator>(&postfix[i].data)) {
@@ -52,10 +52,10 @@ bool eval(const vector<Token> &postfix,
         }
 
       } else
-        throw std::invalid_argument("invalid operator in " + to_string(i) +
+        throw std::invalid_argument("invalid operator in " + std::to_string(i) +
                                     "th element of postfix");
     } else {
-      throw std::invalid_argument("invalid token in " + to_string(i) +
+      throw std::invalid_argument("invalid token in " + std::to_string(i) +
                                   "th element of postfix");
     }
   }

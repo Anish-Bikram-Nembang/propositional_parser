@@ -9,10 +9,10 @@ bool isRightAssoc(const Operator &op) {
 }
 int prec(const Operator &op);
 
-vector<Token> producePostfix(const vector<Token> &tokens) {
+std::vector<Token> producePostfix(const std::vector<Token> &tokens) {
   Type previousType{Type::UNKNOWN};
-  vector<Token> outputList{};
-  stack<Token> opStack{};
+  std::vector<Token> outputList{};
+  std::stack<Token> opStack{};
   if (tokens.empty()) {
     throw std::invalid_argument("Empty list of tokens");
   }

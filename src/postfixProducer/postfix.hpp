@@ -1,3 +1,4 @@
+#pragma once
 #include "../lexer/lexer.hpp"
 
-vector<Token> producePostfix(vector<Token> tokens);
+std::vector<Token> producePostfix(std::vector<Token> tokens);
