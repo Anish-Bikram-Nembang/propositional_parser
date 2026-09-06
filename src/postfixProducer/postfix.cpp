@@ -7,22 +7,7 @@ bool shouldPop(const Operator &in, const Token &top);
 bool isRightAssoc(const Operator &op) {
   return op == Operator::NOT || op == Operator::IMPLICATION;
 }
-int prec(const Operator &op) {
-  switch (op) {
-  case Operator::NOT:
-    return 5;
-  case Operator::AND:
-    return 4;
-  case Operator::OR:
-    return 3;
-  case Operator::IMPLICATION:
-    return 2;
-  case Operator::BICONDITIONAL:
-    return 1;
-  default:
-    throw std::invalid_argument("Invalid Operator");
-  }
-}
+int prec(const Operator &op);
 
 vector<Token> producePostfix(const vector<Token> &tokens) {
   Type previousType{Type::UNKNOWN};
@@ -112,4 +97,20 @@ bool shouldPop(const Operator &in, const Token &top) {
   if (isRightAssoc(in))
     return prec(in) < prec(*op);
   return prec(in) <= prec(*op);
+}
+int prec(const Operator &op) {
+  switch (op) {
+  case Operator::NOT:
+    return 5;
+  case Operator::AND:
+    return 4;
+  case Operator::OR:
+    return 3;
+  case Operator::IMPLICATION:
+    return 2;
+  case Operator::BICONDITIONAL:
+    return 1;
+  default:
+    throw std::invalid_argument("Invalid Operator");
+  }
 }
