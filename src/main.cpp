@@ -12,7 +12,6 @@ int main(void) {
   string proposition;
   cout << "Enter a proposition:" << '\n';
   getline(cin, proposition);
-  cout << "The proposition you entered is: \n" << proposition << '\n';
 
   vector<Token> lexedProposition = lex(proposition);
   vector<Token> postfixProposition = producePostfix(lexedProposition);
