@@ -27,9 +27,11 @@ std::vector<Token> lex(const std::string &proposition) {
       cursor++;
       continue;
     } else if (c == '&') {
+
       flushCurrentIdentifier(lexedProposition, subStr);
       lexedProposition.push_back(Token{Type::OPERATOR, Operator::AND});
       cursor++;
+
     } else if (c == '|') {
       flushCurrentIdentifier(lexedProposition, subStr);
       lexedProposition.push_back(Token{Type::OPERATOR, Operator::OR});
