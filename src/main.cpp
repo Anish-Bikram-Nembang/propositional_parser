@@ -9,6 +9,7 @@
 #include <iostream>
 #include <string>
 #include <unordered_map>
+#include <unordered_set>
 #include <vector>
 
 using namespace std;
@@ -62,14 +63,17 @@ int main(int argc, char **argv) {
       vector<string> variablesOfProposition2 =
           collectVarNames(postfixedProposition2);
 
-      variablesOfProposition1.reserve(variablesOfProposition1.size() +
-                                      variablesOfProposition2.size());
+      std::unordered_set<std::string> seen(variablesOfProposition1.begin(),
+                                           variablesOfProposition1.end());
 
-      variablesOfProposition1.insert(variablesOfProposition1.end(),
-                                     variablesOfProposition2.begin(),
-                                     variablesOfProposition2.end());
-      bool result = areEqual(postfixedProposition1, postfixedProposition2,
-                             variablesOfProposition1);
+      std::vector<std::string> variables = variablesOfProposition1;
+      for (const std::string &variable : variablesOfProposition2) {
+        if (seen.insert(variable).second) {
+          variables.push_back(variable);
+        }
+      }
+      bool result =
+          areEqual(postfixedProposition1, postfixedProposition2, variables);
       if (result)
         cout << "The two propositions are equivalent\n";
       else

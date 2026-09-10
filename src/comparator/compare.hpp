@@ -1,5 +1,5 @@
 #include "../lexer/lexer.hpp"
 
-bool areEqual(std::vector<Token> postfixedProposition1,
-              std::vector<Token> postfixedProposition2,
-              std::vector<std::string> variables);
+bool areEqual(const std::vector<Token> &postfixedProposition1,
+              const std::vector<Token> &postfixedProposition2,
+              const std::vector<std::string> &variables);
