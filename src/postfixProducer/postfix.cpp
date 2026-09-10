@@ -58,6 +58,9 @@ std::vector<Token> producePostfix(const std::vector<Token> &tokens) {
         outputList.push_back(opStack.top());
         opStack.pop();
       }
+      if (opStack.empty()) {
+        throw std::invalid_argument("No left parenthesis found");
+      }
       opStack.pop();
       previousType = Type::RPAREN;
     } else if (tokens[i].type == Type::OPERATOR) {
@@ -66,6 +69,14 @@ std::vector<Token> producePostfix(const std::vector<Token> &tokens) {
       if (previousType == Type::OPERATOR && *op != Operator::NOT) {
         throw std::invalid_argument(
             "A Binary operator cannot be followed by another operator");
+      }
+      if (previousType == Type::VARIABLE && *op == Operator::NOT) {
+        throw std::invalid_argument(
+            "A NOT operator cannot come after a variable");
+      }
+      if (previousType == Type::RPAREN && *op == Operator::NOT) {
+        throw std::invalid_argument(
+            "A NOT operator cannot come after a right parenthesis");
       }
       if (previousType == Type::LPAREN && *op != Operator::NOT)
         throw std::invalid_argument(
