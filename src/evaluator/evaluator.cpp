@@ -25,10 +25,20 @@ bool eval(const std::vector<Token> &postfix,
     } else if (postfix[i].type == Type::OPERATOR) {
       if (const auto *op = std::get_if<Operator>(&postfix[i].data)) {
         if (*op == Operator::NOT) {
+          if (result.size() < 1) {
+            throw std::invalid_argument(
+                "Not requires 1 argument at postfix index " +
+                std::to_string(i));
+          }
           bool val = NOT(result.top());
           result.pop();
           result.push(val);
         } else {
+          if (result.size() < 2) {
+            throw std::invalid_argument(
+                "Binary operator requires 2 operands at postfix index" +
+                std::to_string(i));
+          }
           bool b = result.top();
           result.pop();
           bool a = result.top();
