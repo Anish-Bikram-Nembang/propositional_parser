@@ -1,3 +1,4 @@
+#include "./comparator/compare.hpp"
 #include "./evaluator/evaluator.hpp"
 #include "./lexer/lexer.hpp"
 #include "./postfixProducer/postfix.hpp"
@@ -33,6 +34,14 @@ int main(int argc, char **argv) {
       ->add_option("proposition", propositionToEvaluate,
                    "proposition to evaluate")
       ->required();
+
+  auto compare =
+      app.add_subcommand("compare", "Compare two propositions for equivalence");
+  string propositionToCompare1, propositionToCompare2;
+
+  compare->add_option("first", propositionToCompare1)->required();
+  compare->add_option("second", propositionToCompare2)->required();
+
   CLI11_PARSE(app, argc, argv);
   try {
     if (*print) {
@@ -40,6 +49,31 @@ int main(int argc, char **argv) {
       vector<Token> postfixedProposition = producePostfix(lexedProposition);
       vector<string> variables = collectVarNames(postfixedProposition);
       generateTruthTable(postfixedProposition, variables, propositionToPrint);
+    }
+    if (*compare) {
+      vector<Token> lexedProposition1 = lex(propositionToCompare1);
+      vector<Token> postfixedProposition1 = producePostfix(lexedProposition1);
+
+      vector<Token> lexedProposition2 = lex(propositionToCompare2);
+      vector<Token> postfixedProposition2 = producePostfix(lexedProposition2);
+
+      vector<string> variablesOfProposition1 =
+          collectVarNames(postfixedProposition1);
+      vector<string> variablesOfProposition2 =
+          collectVarNames(postfixedProposition2);
+
+      variablesOfProposition1.reserve(variablesOfProposition1.size() +
+                                      variablesOfProposition2.size());
+
+      variablesOfProposition1.insert(variablesOfProposition1.end(),
+                                     variablesOfProposition2.begin(),
+                                     variablesOfProposition2.end());
+      bool result = areEqual(postfixedProposition1, postfixedProposition2,
+                             variablesOfProposition1);
+      if (result)
+        cout << "The two propositions are equivalent\n";
+      else
+        cout << "The two propositions are not equivalent\n";
     }
     if (*evaluate) {
       unordered_map<string, bool> variableWithValues{};
