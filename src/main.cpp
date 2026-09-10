@@ -1,10 +1,10 @@
-#include "./comparator/compare.hpp"
-#include "./evaluator/evaluator.hpp"
-#include "./lexer/lexer.hpp"
-#include "./postfixProducer/postfix.hpp"
+#include "compare.hpp"
+#include "evaluator.hpp"
+#include "lexer.hpp"
+#include "postfix.hpp"
 #include "CLI/CLI.hpp"
-#include "truthTableGenerator/truthTableGenerator.hpp"
-#include "varNamesCollector/varNamesCollector.hpp"
+#include "truthTableGenerator.hpp"
+#include "varNamesCollector.hpp"
 #include <exception>
 #include <iostream>
 #include <string>

@@ -1,5 +1,5 @@
 #include "./compare.hpp"
-#include "../evaluator/evaluator.hpp"
+#include "evaluator.hpp"
 #include <stdexcept>
 #include <unordered_map>
 

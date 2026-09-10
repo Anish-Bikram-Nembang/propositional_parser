@@ -1,5 +1,5 @@
 #pragma once
-#include "../lexer/lexer.hpp"
+#include "lexer.hpp"
 #include <unordered_map>
 
 bool eval(const std::vector<Token> &postfix,

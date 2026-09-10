@@ -1,31 +1,67 @@
-## A Propositional logic parser
-- Supported logical operators:
-    - AND (&)
-    - OR (|)
-    - NOT (!)
-    - Implication (->)
-    - Biconditional (<->)
+# A Propositional Logic Parser
 
-#### Notes:
-    - only underscores and numbers are allowed in variable names whitespaces are ignored and variables starting with a number is not allowed.
-    - in this program the operator precedence of the operators are as follows:
-        () > ! > & > | > -> > <->
+This command-line program parses and evaluates propositional logic expressions.
 
-### Steps to run the program
-    make sure you have gcc installed
+Supported operators:
 
-1. Clone the repo:
+- AND: `&`
+- OR: `|`
+- NOT: `!`
+- Implication: `->`
+- Biconditional: `<->`
 
-```bash
-    git clone https://github.com/Anish-Bikram-Nembang/propositional_parser.git
+Operator precedence, from highest to lowest, is:
+
+```text
+() > ! > & > | > -> > <->
 ```
 
-2. cd into it:
+Variable names may contain letters, underscores, and numbers, but cannot start
+with a number. Whitespace is ignored.
+
+## Requirements
+
+- C++17 compiler
+- CMake 3.16 or newer
+- CLI11 development headers (`CLI/CLI.hpp`)
+
+On Debian or Ubuntu, CLI11 may be installed with:
+
 ```bash
-    cd propositional_parser
-```
-3. compile and run the program
-```bash
-g++ src/main.cpp src/lexer/lexer.cpp src/evaluator/evaluator.cpp src/postfixProducer/postfix.cpp src/truthTableGenerator/truthTableGenerator.cpp src/varNamesCollector/varNamesCollector.cpp -o parser && ./parser
+sudo apt install libcli11-dev
 ```
 
+## Build
+
+Configure and build in a separate directory:
+
+```bash
+cmake -S . -B build
+cmake --build build
+```
+
+The executable is created at `build/parser`.
+
+## Usage
+
+Print a truth table:
+
+```bash
+./build/parser print "A & B"
+```
+
+Evaluate a proposition interactively:
+
+```bash
+./build/parser evaluate "A -> B"
+```
+
+Compare two propositions for logical equivalence:
+
+```bash
+./build/parser compare "A & B" "B & A"
+```
+
+The comparison command evaluates both propositions for every assignment of
+their combined variables. Truth-table generation and comparison support at
+most 20 distinct variables.

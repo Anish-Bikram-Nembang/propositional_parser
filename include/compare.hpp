@@ -1,4 +1,4 @@
-#include "../lexer/lexer.hpp"
+#include "lexer.hpp"
 
 bool areEqual(const std::vector<Token> &postfixedProposition1,
               const std::vector<Token> &postfixedProposition2,

@@ -1,4 +1,4 @@
 #pragma once
-#include "../lexer/lexer.hpp"
+#include "lexer.hpp"
 
 std::vector<std::string> collectVarNames(const std::vector<Token> &tokens);

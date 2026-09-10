@@ -1,5 +1,5 @@
 #include "./truthTableGenerator.hpp"
-#include "../evaluator/evaluator.hpp"
+#include "evaluator.hpp"
 #include <iomanip>
 #include <iostream>
 #include <stdexcept>
